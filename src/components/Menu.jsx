@@ -1,6 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import OrganoFarm from '../img/logo.png'
+import HomeIcon from "@mui/icons-material/Home"
 const Container=styled.div`
   flex:1;
   background-color:#202020;
@@ -23,7 +24,7 @@ const Img=styled.img`
   height:25px;
 `;
 const Item = styled.div`
-  
+  margin-top:25px;
 `;
 export default function Menu() {
   return (
@@ -34,6 +35,19 @@ export default function Menu() {
           <Img src={OrganoFarm}/>
           OrganoFarm
         </Logo>
+        <Item>
+          home
+        </Item>
+        <Item>
+          home
+        </Item>
+
+        <Item>
+            <HomeIcon/>
+        </Item>
+        <Item>
+          home
+        </Item>
       </Wrapper>
     </Container>
   )
