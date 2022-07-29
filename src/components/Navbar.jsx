@@ -14,10 +14,26 @@ const Wrapper=styled.div`
   align-items:center;
   height:100%;
   padding 0px 20px;
+  position :relative;
+  justify-content:flex-end;
 `;
 
-const Search = styled.div``;
-const Input = styled.input``;
+const Search = styled.div`
+  width:40%;
+  left:0;
+  right:0;
+  position:absolute;
+  margin:auto;
+  align-items:center;
+  justify-content:space-between;
+  display:flex;
+  padding:5px;
+  border:1px solid #ccc;
+`;
+const Input = styled.input`
+  background-color:transparent;
+  border:none;
+`;
 const Button = styled.button`
   padding: 5px 15px;
   background-color: transparent;
@@ -25,7 +41,7 @@ const Button = styled.button`
   color: #3ea6ff;
   border-radius: 3px;
   font-weight: 500;
-  margin-top: 10px;
+  
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -38,7 +54,7 @@ export default function Navbar() {
     <Container>
       <Wrapper>
         <Search>
-          <input placeholder='search'/>
+          <Input placeholder='search'/>
           <SearchIcon/>
         </Search>
         <Button>
