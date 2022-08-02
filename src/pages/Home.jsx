@@ -1,7 +1,38 @@
 import React from 'react'
-
-export default function Home() {
+import styled from 'styled-components'
+import Card from '../components/Card';
+const Container= styled.div`
+  display : flex;
+  justify-content: space-between;
+  flex-wrap:wrap;
+`;
+export default function ljlsdj() {
   return (
-    <div>Home</div>
+    <Container>
+      <Card/>
+      <Card/>
+      <Card/>
+      <Card/>
+      <Card/>
+      <Card/>
+      <Card/>
+      <Card/>
+      <Card/>
+      <Card/>
+      <Card/>
+      <Card/>
+      <Card/>
+      <Card/>
+      <Card/>
+      <Card/>
+      <Card/>
+      <Card/> 
+      <Card/>
+
+
+      
+
+
+    </Container>
   )
 }
