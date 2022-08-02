@@ -15,7 +15,9 @@ const Main = styled.div`
   background-color: ${({ theme }) => theme.bg};
   flex: 7;
 `;
-const Wrapper = styled.div``;
+const Wrapper = styled.div`
+  padding:22px 96px;
+`;
 export default function App() {
   const [darkMode, setDarkMode] = useState(false);
   return (
