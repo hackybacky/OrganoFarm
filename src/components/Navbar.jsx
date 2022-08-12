@@ -4,6 +4,7 @@ import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined
 import SearchIcon from "@mui/icons-material/Search";
 import { Link } from "react-router-dom";
 import Clogo from "../img/logo.png";
+import { useSelector } from "react-redux";
 
 const Container = styled.div`
   position: sticky;
@@ -56,6 +57,8 @@ const Img = styled.img`
 `;
 
 export default function Navbar() {
+  const currentUser = useSelector(state=>state.user.currentUser)
+  console.log(currentUser)
   return (
     <Container>
       <Wrapper>
@@ -69,12 +72,14 @@ export default function Navbar() {
           <Input placeholder="search" />
           <SearchIcon />
         </Search>
-        <Link to="/signin" style={{ textDecoration: "none" }}>
+        {
+          currentUser?"user":<Link to="/signin" style={{ textDecoration: "none" }}>
           <Button>
             <AccountCircleOutlinedIcon />
             SIGN IN
           </Button>
         </Link>
+        }
       </Wrapper>
     </Container>
   );
