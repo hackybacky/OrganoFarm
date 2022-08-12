@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
-
+import { useState } from "react";
+import axios from "axios";
 const Container = styled.div`
   display: flex;
   flex-direction: column;
@@ -64,14 +65,26 @@ const Link = styled.span`
 `;
 
 const SignIn = () => {
+  const [email,setEmail]=useState();
+  const [password, setPassword]=useState();
+  const [name,setName]=useState();
+  const handleLogin=async(e)=>{
+    e.preventDefault();
+    try{
+      const res = await axios.post("/auth/signin",{name,password});
+      console.log(res.data);
+    }catch(err){
+
+    }
+  }
   return (
     <Container>
       <Wrapper>
         <Title>Sign in</Title>
         <SubTitle>to continue to </SubTitle>
-        <Input placeholder="username" />
-        <Input type="password" placeholder="password" />
-        <Button>Sign in</Button>
+        <Input placeholder="username" onChange={(e)=>setName(e.target.value)} />
+        <Input type="password" placeholder="password" onChange={(e)=>setPassword(e.target.value)} />
+        <Button onClick={handleLogin}>Sign in</Button>
         <Title>or</Title>
         <Input placeholder="username" />
         <Input placeholder="email" />
