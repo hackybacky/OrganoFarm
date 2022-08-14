@@ -4,7 +4,8 @@ import { useState } from "react";
 import axios from "axios";
 import { useDispatch } from "react-redux";
 import { loginFailure, loginStart, loginSuccess } from "../redux/userSlice";
-import {auth , provider} from "../firebase"
+import {auth ,provider } from "../firebase"
+
 import { signInWithPopup } from "firebase/auth";
 const Container = styled.div`
   display: flex;
@@ -83,6 +84,21 @@ const SignIn = () => {
     }catch(err){
       dispatch(loginFailure())
     }
+  }
+  const signInWithGoogle=()=>{
+    loginStart();
+    signInWithPopup(auth ,provider).then((result)=>{
+      axios.post("/auth/google",{
+        name:result.user.displayName,
+        email:result.user.email,
+        img:result.user.photoURL,
+      }).then((res)=>{
+        dispatch(loginSuccess(res.data));
+      })
+
+    }).catch((err)=>{
+      dispatch(loginFailure());
+    })
   }
   return (
     <Container>
