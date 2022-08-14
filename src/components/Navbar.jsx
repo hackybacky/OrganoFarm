@@ -71,10 +71,10 @@ const Avatar = styled.img`
   width :32px;
   border-radius : 50%;
   background-color:#999;
-`
+`;
 export default function Navbar() {
   const currentUser = useSelector(state=>state.user.currentUser)
-  console.log(currentUser)
+  console.log(currentUser);
   return (
     <Container>
       <Wrapper>
@@ -88,11 +88,12 @@ export default function Navbar() {
           <Input placeholder="search" />
           <SearchIcon />
         </Search>
-        {
+        { 
+          
           currentUser?(
             <User>
               <VideoCallIcon/>
-              <Avatar/>
+              <Avatar src ={currentUser.img}/>
               {currentUser.name}
             </User>
           ):<Link to="/signin" style={{ textDecoration: "none" }}>

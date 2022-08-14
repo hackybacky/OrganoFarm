@@ -88,11 +88,13 @@ const SignIn = () => {
   const signInWithGoogle=()=>{
     loginStart();
     signInWithPopup(auth ,provider).then((result)=>{
+      console.log(result.user.photoURL)
       axios.post("/auth/google",{
         name:result.user.displayName,
         email:result.user.email,
         img:result.user.photoURL,
       }).then((res)=>{
+        console.log(res.data);
         dispatch(loginSuccess(res.data));
       })
 
