@@ -6,6 +6,13 @@ import ReplyOutlinedIcon from "@mui/icons-material/ReplyOutlined";
 import AddTaskOutlinedIcon from "@mui/icons-material/AddTaskOutlined";
 import Comments from "../components/Comments";
 import Card from "../components/Card";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchFailure, fetchStart, fetchSuccess } from "../redux/videoSlice";
+import { useLocation } from "react-router-dom";
+import { useEffect } from "react";
+import axios from "axios";
+import { useState } from "react";
+
 
 const Container = styled.div`
   display: flex;
@@ -105,6 +112,26 @@ const Subscribe = styled.button`
 `;
 
 const Video = () => {
+  const currentUser = useSelector((state)=>state.user);
+  const currentVideo = useSelector((state)=>state.video);
+  const dispatch = useDispatch();
+  const path = useLocation().pathname.split("/")[2];
+  
+  const [channel,setChannel]=useState({});
+  useEffect(()=>{
+    const fetchData=async()=>{
+      try{
+        const videoRes = await axios.get(`/videos/find/${path}`);
+        const channelRes = await axios.get(`/users/find/${videoRes.userId}`);
+        
+        setChannel(channelRes);
+        dispatch(fetchSuccess(videoRes.data));
+      }catch(err){
+
+      }
+    }
+    fetchData();
+  },[path,dispatch])
   return (
     <Container>
       <Content>
@@ -157,7 +184,7 @@ const Video = () => {
         <Hr />
         <Comments/>
       </Content>
-      <Recommendation>
+      {/* <Recommendation>
         <Card type="sm"/>
         <Card type="sm"/>
         <Card type="sm"/>
@@ -171,7 +198,7 @@ const Video = () => {
         <Card type="sm"/>
         <Card type="sm"/>
         <Card type="sm"/>
-      </Recommendation>
+      </Recommendation> */}
     </Container>
   );
 };
