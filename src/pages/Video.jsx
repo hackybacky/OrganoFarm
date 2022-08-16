@@ -8,7 +8,7 @@ import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 import Comments from "../components/Comments";
 import Card from "../components/Card";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchFailure, fetchStart, fetchSuccess } from "../redux/videoSlice";
+import { fetchFailure, fetchStart, fetchSuccess,like,dislike } from "../redux/videoSlice";
 import { useLocation } from "react-router-dom";
 import { useEffect } from "react";
 import axios from "axios";
@@ -136,7 +136,16 @@ const Video = () => {
     }
     fetchData();
   },[path,dispatch])
-  console.log(currentVideo)
+  const handleLike=async()=>{
+    console.log("j");
+    const res=await axios.put(`/users/like/${currentVideo._id}`);
+    dispatch(like(currentUser._id));
+    console.log(res);
+  }
+  const handleDislike=async()=>{
+    await axios.put(`/users/dislike/${currentVideo._id}`)
+    dispatch(dislike(currentUser._id));
+  }
   return (
     <Container>
       <Content>
@@ -156,7 +165,7 @@ const Video = () => {
           <Info>{currentVideo?.views}views • {format(currentVideo?.createdAt)} </Info>
           <Buttons>
             <Button onClick={handleLike}>
-              {currentVideo.likes?.includes(currentUser._id)? (<ThumbUpIcon/>):(<ThumbUpOutlinedIcon/>)}
+              {currentVideo?.likes?.includes(currentUser._id)? (<ThumbUpIcon/>):(<ThumbUpOutlinedIcon/>)}
               {" "}
               {currentVideo?.likes?.length}
             </Button>
