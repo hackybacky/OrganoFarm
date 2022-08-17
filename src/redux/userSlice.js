@@ -25,10 +25,25 @@ export const userSlice = createSlice({
         state.currentUser=null;
         state.loading=false;
         state.error = false;
+      },
+      subscription:(state,action)=>{
+        if(!state.currentUser.subscribedUsers.include(action.payload)){
+          state.currentUser.subscribedUsers.push(action.payload);
+        }
+      },
+      unsubscription:(state,action)=>{
+        if(state.currentUser.subscribedUsers.include(action.payload)){
+          state.currentUser.subscribedUsers.splice(
+            state.currentUser.subscribedUsers.findIndex(
+              (userId) => userId === action.payload
+            ),
+            1
+          );
+        }
       }
   },
 })
 
-export const { loginStart, logout, loginSuccess ,loginFailure } = userSlice.actions
+export const { loginStart, logout, loginSuccess ,loginFailure,subscription,unsubscription } = userSlice.actions
 
 export default userSlice.reducer;

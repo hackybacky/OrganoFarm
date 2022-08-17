@@ -146,6 +146,9 @@ const Video = () => {
     await axios.put(`/users/dislike/${currentVideo._id}`)
     dispatch(dislike(currentUser._id));
   }
+  const handleSubscribe=async()=>{
+      await axios.put()
+  }
   return (
     <Container>
       <Content>
@@ -192,7 +195,7 @@ const Video = () => {
               </Description>
             </ChannelDetail>
           </ChannelInfo>
-          <Subscribe>SUBSCRIBE</Subscribe>
+          <Subscribe onClick={handleSubscribe}>{currentUser.subscribedUsers.includes(channel._id)?"subscribed":"subscribe"}</Subscribe>
         </Channel>
         <Hr />
         <Comments/>
