@@ -6,13 +6,15 @@ import ReplyOutlinedIcon from "@mui/icons-material/ReplyOutlined";
 import AddTaskOutlinedIcon from "@mui/icons-material/AddTaskOutlined";
 import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 import Comments from "../components/Comments";
-import Card from "../components/Card";
+import card from "../components/Card";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchFailure, fetchStart, fetchSuccess,like,dislike } from "../redux/videoSlice";
+import {subscription } from "../redux/userSlice";
 import { useLocation } from "react-router-dom";
 import { useEffect } from "react";
 import axios from "axios";
 import { useState } from "react";
+
 import { format } from "timeago.js";
 import ThumbDownIcon from '@mui/icons-material/ThumbDown';
 const Container = styled.div`
@@ -146,8 +148,12 @@ const Video = () => {
     await axios.put(`/users/dislike/${currentVideo._id}`)
     dispatch(dislike(currentUser._id));
   }
-  const handleSubscribe=async()=>{
-      await axios.put()
+  const handleSub=async()=>{
+    currentUser.subscribedUsers.includes(channel._id)?
+      (await axios.put(`/users/unsub/${channel._id}`))
+      :
+      (await axios.put(`/users/sub/${channel._id}`));
+      dispatch(subscription(channel._id))
   }
   return (
     <Container>
@@ -195,7 +201,7 @@ const Video = () => {
               </Description>
             </ChannelDetail>
           </ChannelInfo>
-          <Subscribe onClick={handleSubscribe}>{currentUser.subscribedUsers.includes(channel._id)?"subscribed":"subscribe"}</Subscribe>
+          <Subscribe onClick={handleSub}>{currentUser.subscribedUsers.includes(channel._id)?"subscribed":"subscribe"}</Subscribe>
         </Channel>
         <Hr />
         <Comments/>
