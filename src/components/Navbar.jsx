@@ -1,12 +1,13 @@
 import React from "react";
 import styled from "styled-components";
 import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
-
+import { useState } from "react";
 import SearchIcon from "@mui/icons-material/Search";
 import { Link } from "react-router-dom";
 import Clogo from "../img/logo.png";
 import { useSelector } from "react-redux";
-import VideoCallIcon from '@mui/icons-material/VideoCall';
+import VideoCallIcon from "@mui/icons-material/VideoCall";
+import Upload from "./Upload.jsx";
 
 const Container = styled.div`
   position: sticky;
@@ -21,7 +22,7 @@ const Wrapper = styled.div`
   height:100%;
   padding 0px 20px;
   position :relative;
-  color :${({theme})=>theme.text}
+  color :${({ theme }) => theme.text}
 `;
 
 const Search = styled.div`
@@ -63,47 +64,50 @@ const User = styled.div`
   align-items : center,
   gap:10px,
   font-weight : 500,
-  color : ${({theme})=>theme.text}
+  color : ${({ theme }) => theme.text}
 
 `;
 const Avatar = styled.img`
-  height : 32 px ;
-  width :32px;
-  border-radius : 50%;
-  background-color:#999;
+  height: 32 px;
+  width: 32px;
+  border-radius: 50%;
+  background-color: #999;
 `;
 export default function Navbar() {
-  const currentUser = useSelector(state=>state.user.currentUser)
+  const [open, setOpen] = useState(false);
+  const currentUser = useSelector((state) => state.user.currentUser);
   console.log(currentUser);
   return (
-    <Container>
-      <Wrapper>
-        <Link to="/" style={{ textDecoration: "none", color: "inherit" }}>
-          <Logo>
-            <Img src={Clogo} />
-            OrganoFarm
-          </Logo>
-        </Link>
-        <Search>
-          <Input placeholder="search" />
-          <SearchIcon />
-        </Search>
-        { 
-          
-          currentUser?(
+    <>
+      <Container>
+        <Wrapper>
+          <Link to="/" style={{ textDecoration: "none", color: "inherit" }}>
+            <Logo>
+              <Img src={Clogo} />
+              OrganoFarm
+            </Logo>
+          </Link>
+          <Search>
+            <Input placeholder="search" />
+            <SearchIcon />
+          </Search>
+          {currentUser ? (
             <User>
-              <VideoCallIcon/>
-              <Avatar src ={currentUser.img}/>
+              <VideoCallIcon onClick={() => setOpen(true)} />
+              <Avatar src={currentUser.img} />
               {currentUser.name}
             </User>
-          ):<Link to="/signin" style={{ textDecoration: "none" }}>
-          <Button>
-            <AccountCircleOutlinedIcon />
-            SIGN IN
-          </Button>
-        </Link>
-        }
-      </Wrapper>
-    </Container>
+          ) : (
+            <Link to="/signin" style={{ textDecoration: "none" }}>
+              <Button>
+                <AccountCircleOutlinedIcon />
+                SIGN IN
+              </Button>
+            </Link>
+          )}
+        </Wrapper>
+      </Container>
+      {open && <Upload setOpen={setOpen}/>}
+    </>
   );
 }
