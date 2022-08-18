@@ -9,6 +9,7 @@ import { darkTheme, lightTheme } from "./utils/Theme";
 import Home from "./pages/Home";
 import Video from "./pages/Video";
 import Signin from "./pages/Signin";
+import { Search } from "./pages/Search";
 
 const Main = styled.div`
   background-color: ${({ theme }) => theme.bg};
@@ -37,6 +38,7 @@ export default function App() {
                 <Route path="trends" element={<Home type="trend" />} />
                 <Route path="subscription" element={<Home type="sub" />} />
                 <Route path="signin" element={<Signin />} />
+                <Route path="search" element={<Search />} />
                 <Route path="video">
                   <Route path=":id" element={<Video />} />
                 </Route>

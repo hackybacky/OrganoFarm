@@ -3,7 +3,7 @@ import styled from "styled-components";
 import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
 import { useState } from "react";
 import SearchIcon from "@mui/icons-material/Search";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Clogo from "../img/logo.png";
 import { useSelector } from "react-redux";
 import VideoCallIcon from "@mui/icons-material/VideoCall";
@@ -36,7 +36,9 @@ const Search = styled.div`
 `;
 const Input = styled.input`
   background-color: transparent;
+  width:100%;
   border: none;
+  outline:none;
 `;
 const Button = styled.button`
   padding: 5px 15px;
@@ -75,8 +77,10 @@ const Avatar = styled.img`
 `;
 export default function Navbar() {
   const [open, setOpen] = useState(false);
+  const [q,setQ]=useState("");
   const currentUser = useSelector((state) => state.user.currentUser);
-  console.log(currentUser);
+  const navigate= useNavigate();
+  // console.log(currentUser);
   return (
     <>
       <Container>
@@ -87,9 +91,9 @@ export default function Navbar() {
               OrganoFarm
             </Logo>
           </Link>
-          <Search>
-            <Input placeholder="search" />
-            <SearchIcon />
+          <Search >
+            <Input placeholder="search" onChange={(e)=>setQ(e.target.value)} />
+            <SearchIcon onClick={()=>navigate(`/search?q=${q}`)} />
           </Search>
           {currentUser ? (
             <User>

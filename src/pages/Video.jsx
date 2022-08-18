@@ -14,9 +14,10 @@ import { useLocation } from "react-router-dom";
 import { useEffect } from "react";
 import axios from "axios";
 import { useState } from "react";
-
+import { Recommendations } from "../components/Recommendations";
 import { format } from "timeago.js";
 import ThumbDownIcon from '@mui/icons-material/ThumbDown';
+import { Link } from "react-router-dom";
 const Container = styled.div`
   display: flex;
   gap: 24px;
@@ -63,9 +64,9 @@ const Hr = styled.hr`
   border: 0.5px solid ${({ theme }) => theme.soft};
 `;
 
-const Recommendation = styled.div`
-  flex: 2;
-`;
+// const Recommendation = styled.div`
+//   flex: 2;
+// `;
 const Channel = styled.div`
   display: flex;
   justify-content: space-between;
@@ -144,10 +145,10 @@ const Video = () => {
     fetchData();
   },[path,dispatch])
   const handleLike=async()=>{
-    console.log("j");
+    
     const res=await axios.put(`/users/like/${currentVideo._id}`);
     dispatch(like(currentUser._id));
-    console.log(res);
+    
   }
   const handleDislike=async()=>{
     await axios.put(`/users/dislike/${currentVideo._id}`)
@@ -203,21 +204,11 @@ const Video = () => {
         <Hr />
         <Comments videoId ={currentVideo?._id}/>
       </Content>
-      {/* <Recommendation>
-        <Card type="sm"/>
-        <Card type="sm"/>
-        <Card type="sm"/>
-        <Card type="sm"/>
-        <Card type="sm"/>
-        <Card type="sm"/>
-        <Card type="sm"/>
-        <Card type="sm"/>
-        <Card type="sm"/>
-        <Card type="sm"/>
-        <Card type="sm"/>
-        <Card type="sm"/>
-        <Card type="sm"/>
-      </Recommendation> */}
+      {console.log(currentVideo)}
+      
+      <Recommendations tags={currentVideo.tags} currentVideoId={currentVideo._id} />
+      
+      
     </Container>
   );
 };
