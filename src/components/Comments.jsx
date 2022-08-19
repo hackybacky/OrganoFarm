@@ -54,16 +54,16 @@ const Comments = ({videoId}) => {
   useEffect(()=>{
     const fetchComments =async()=>{
      try{
-      // console.log(videoId)
+        
       const res = await axios.get(`/comments/${videoId}`);
       setComments(res.data);
-      // console.log(res.data);
+      
      }catch(err){}
     }
     fetchComments();
   },[videoId])
   const addComment= async()=>{
-    console.log("hello")
+    
     const res = await axios.post("/comments",{desc:newComment,videoId});
     console.log(res);
   }

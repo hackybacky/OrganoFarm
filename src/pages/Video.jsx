@@ -17,6 +17,7 @@ import { useState } from "react";
 import { Recommendations } from "../components/Recommendations";
 import { format } from "timeago.js";
 import ThumbDownIcon from '@mui/icons-material/ThumbDown';
+import CountUp from 'react-countup';
 import { Link } from "react-router-dom";
 const Container = styled.div`
   display: flex;
@@ -123,6 +124,7 @@ const VideoFrame=styled.video`
 const Video = () => {
   const currentUser = useSelector((state)=>state.user.currentUser);
   const currentVideo = useSelector((state)=>state.video.currentVideo);
+  const [notPlayed,setNotPlayed] = useState(false);
   const dispatch = useDispatch();
   const path = useLocation().pathname.split("/")[2];
   // console.log(path);
@@ -145,10 +147,8 @@ const Video = () => {
     fetchData();
   },[path,dispatch])
   const handleLike=async()=>{
-    
     const res=await axios.put(`/users/like/${currentVideo._id}`);
     dispatch(like(currentUser._id));
-    
   }
   const handleDislike=async()=>{
     await axios.put(`/users/dislike/${currentVideo._id}`)
@@ -159,13 +159,20 @@ const Video = () => {
       (await axios.put(`/users/unsub/${channel._id}`))
       :
       (await axios.put(`/users/sub/${channel._id}`));
-      dispatch(subscription(channel._id))
+      dispatch(subscription(channel._id));
+  }
+  const handlePlay=async()=>{
+    if(notPlayed===false){
+      console.log("hello")
+      const res = await axios.put(`/videos/view/${currentVideo._id}`);
+      setNotPlayed(true);
+    }
   }
   return (
     <Container>
       <Content>
         <VideoWrapper>
-          <VideoFrame src ={currentVideo?.videoUrl} controls/>
+          <VideoFrame src ={currentVideo?.videoUrl} controls onPlay={()=>handlePlay()}/>
         </VideoWrapper>
         <Title>{currentVideo?.title}</Title>
         <Details>
@@ -204,9 +211,9 @@ const Video = () => {
         <Hr />
         <Comments videoId ={currentVideo?._id}/>
       </Content>
-      {console.log(currentVideo)}
+      {/* {console.log(currentVideo)} */}
       
-      <Recommendations tags={currentVideo.tags} currentVideoId={currentVideo._id} />
+      <Recommendations tags={currentVideo?.tags} currentVideoId={currentVideo?._id} />
       
       
     </Container>

@@ -73,10 +73,12 @@ const Menu = ({ darkMode, setDarkMode }) => {
   return (
     <Container>
       <Wrapper>
-        <Item>
-          <HomeIcon />
-          Home
-        </Item>
+        <Link to="/" style={{textDecoration:"none" , outline:"none"}}>
+          <Item>
+            <HomeIcon />
+            Home
+          </Item>
+        </Link>
         <Link to="/trends" style={{ textDecoration: "none" }}>
           <Item>
             <ExploreOutlinedIcon />
